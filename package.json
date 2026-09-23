@@ -7,7 +7,7 @@
     "node": "24"
   },
   "scripts": {
-    "dev": "docker compose up -d postgres redis && DATABASE_URL=postgresql://childcare:childcare@localhost:5432/childcare AUTH_SECRET=local-development-secret-change-me-32-characters NEXT_PUBLIC_API_URL=http://localhost:4000 turbo dev --dangerously-disable-package-manager-check",
+    "dev": "docker compose up -d postgres redis && DATABASE_URL=postgresql://childcare:childcare@localhost:55432/childcare AUTH_SECRET=local-development-secret-change-me-32-characters NEXT_PUBLIC_API_URL=http://localhost:30001 turbo dev --dangerously-disable-package-manager-check",
     "build": "turbo build",
     "lint": "turbo lint",
     "typecheck": "turbo typecheck"

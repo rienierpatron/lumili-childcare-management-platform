@@ -43,3 +43,13 @@ model Membership {
   @@unique([userId, tenantId])
   @@index([tenantId])
 }
+
+model SeedExecution {
+  id         String   @id @default(uuid())
+  seedName   String
+  version    String
+  executedAt DateTime @default(now())
+
+  @@unique([seedName, version])
+  @@index([seedName])
+}

@@ -9,6 +9,10 @@ boundary and independently deployable backend services.
 See [SETUP.md](./SETUP.md) for Docker, database, Prisma migration and seed,
 environment, and application startup instructions.
 
+The setup guide includes separate workflows for first-time installation,
+existing databases, daily development, schema updates, seed updates, and
+staging/production deployments.
+
 ## Repository boundaries
 
 ```text
@@ -45,6 +49,26 @@ This starts PostgreSQL and Redis, then launches the frontend, gateway, and
 every backend service through Turborepo. Stop the stack with `Ctrl+C`; stop the
 Docker infrastructure separately with `docker compose down`.
 
+The Docker database uses host port `55432` because port `5432` may be used by a
+separate local PostgreSQL installation. The Redis container uses host port
+`56379`.
+
+For first-time database setup, run:
+
+```bash
+cd services/identity
+export DATABASE_URL='postgresql://childcare:childcare@localhost:55432/childcare'
+pnpm db:generate
+pnpm db:migrate --name identity
+SEED_ADMIN_PASSWORD='use-at-least-12-characters' pnpm db:seed
+```
+
+After that, normal development only requires:
+
+```bash
+pnpm dev
+```
+
 Run a service independently from its directory when needed:
 
 ```bash
@@ -61,14 +85,14 @@ at `GET /health`. Service URLs can be overridden with
 The local development ports are:
 
 ```text
-web:          http://localhost:3000
-gateway:      http://localhost:4000
-identity:     http://localhost:4001
-children:     http://localhost:4002
-enrollment:   http://localhost:4003
-attendance:   http://localhost:4004
-billing:      http://localhost:4005
-notifications:http://localhost:4006
+web:          http://localhost:30000
+gateway:      http://localhost:30001
+identity:     http://localhost:30002
+children:     http://localhost:30003
+enrollment:   http://localhost:30004
+attendance:   http://localhost:30005
+billing:      http://localhost:30006
+notifications:http://localhost:30007
 ```
 
 ## Module rules
