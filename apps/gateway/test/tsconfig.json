@@ -1,0 +1,10 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "rootDir": "..",
+    "ignoreDeprecations": "6.0",
+    "noEmit": false
+  },
+  "include": ["../src/**/*.ts", "**/*.ts"]
+}
