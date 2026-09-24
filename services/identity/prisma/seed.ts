@@ -3,7 +3,7 @@ import { randomBytes, scryptSync } from 'node:crypto'
 
 const prisma = new PrismaClient()
 const seedName = 'identity-development'
-const seedVersion = '001'
+const seedVersion = '002'
 
 function hashPassword (password: string): string {
   const salt = randomBytes(16).toString('hex')

@@ -9,6 +9,7 @@ import { MarketingPanel } from "../components/MarketingPanel";
 
 type LoginResponse = {
   user: { id: string; email: string };
+  accountType: "organization" | "platform";
   tenantId?: string;
   role?: string;
   platformRole?: string;
@@ -51,6 +52,7 @@ export default function Home() {
       <main className="login-shell">
         <AuthenticatedCard
           email={session.user.email}
+          accountType={session.accountType}
           role={session.platformRole ?? session.role}
           onSignOut={() => {
             window.localStorage.removeItem("annavia.accessToken");

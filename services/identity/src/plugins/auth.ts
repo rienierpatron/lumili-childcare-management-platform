@@ -11,6 +11,7 @@ import type { PrismaClient } from '@prisma/client'
 
 export type Role = 'owner' | 'admin' | 'staff' | 'parent'
 export type PlatformRole = 'owner' | 'support' | 'sales' | 'developer' | 'ops'
+export type AccountType = 'organization' | 'platform'
 export type Permission =
   | 'tenant:read'
   | 'tenant:manage'
@@ -32,6 +33,7 @@ export type AuthUser = {
 
 export type AuthContext = {
   userId: string
+  accountType: AccountType
   tenantId?: string
   role?: Role
   platformRole?: PlatformRole
@@ -104,7 +106,7 @@ function readToken (token: string, secret: string): TokenPayload | null {
 
   try {
     const parsed = decode<TokenPayload>(payload)
-    if (!parsed.userId || (!parsed.tenantId && !parsed.platformRole) || parsed.exp <= Math.floor(Date.now() / 1000)) {
+    if (!parsed.userId || !parsed.accountType || (!parsed.tenantId && !parsed.platformRole) || parsed.exp <= Math.floor(Date.now() / 1000)) {
       return null
     }
     return parsed

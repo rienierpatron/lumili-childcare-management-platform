@@ -16,6 +16,57 @@ Use the section that matches your situation:
 | New or changed development data | [Update seed data](#update-seed-data) |
 | Staging or production deployment | [Staging and production](#staging-and-production) |
 
+## Root database command shortcuts
+
+These commands can be run from the repository root. They currently target the
+identity service, which owns the application database schema.
+
+Set the local Docker database connection once in your shell:
+
+```bash
+export DATABASE_URL='postgresql://childcare:childcare@localhost:55432/childcare'
+```
+
+Generate Prisma Client after editing the schema:
+
+```bash
+pnpm db:generate
+```
+
+Create and apply a named local development migration:
+
+```bash
+pnpm migration:schema-changes --name describe_the_change
+```
+
+Check whether all migrations have been applied:
+
+```bash
+pnpm db:migrate:status
+```
+
+Deploy committed migrations in staging or production:
+
+```bash
+pnpm db:deploy
+```
+
+Run the versioned seed:
+
+```bash
+SEED_ADMIN_PASSWORD='use-at-least-12-characters' pnpm db:seed
+```
+
+Start PostgreSQL before using these commands:
+
+```bash
+docker compose up -d postgres
+```
+
+Do not use `migration:schema-changes` in staging or production. It runs
+Prisma's development migration workflow and is intended for creating migration
+files locally. Use `db:deploy` to apply already-reviewed migration files.
+
 ## First-time setup
 
 Follow these steps when setting up Annavia on a new machine, or after deleting
@@ -198,6 +249,23 @@ local database and start over.
 Use this workflow when you edit a Prisma schema, for example
 `services/identity/prisma/schema.prisma`.
 
+From the repository root, the shortcut command for creating and applying a
+local development migration is:
+
+```bash
+export DATABASE_URL='postgresql://childcare:childcare@localhost:55432/childcare'
+pnpm migration:schema-changes --name describe_the_change
+```
+
+For example:
+
+```bash
+pnpm migration:schema-changes --name add_membership_status
+```
+
+This command runs Prisma's local `migrate dev` workflow, creates a migration,
+applies it to the local database, and regenerates the Prisma client.
+
 ### 1. Make the schema change
 
 Edit the schema in the service that owns the data. Do not add another service's
@@ -207,6 +275,12 @@ tables to the identity schema.
 
 ```bash
 cd services/identity
+pnpm db:generate
+```
+
+The equivalent root command is:
+
+```bash
 pnpm db:generate
 ```
 

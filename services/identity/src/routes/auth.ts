@@ -78,7 +78,8 @@ const authRoutes: FastifyPluginAsync = async (fastify) => {
     return reply.code(201).send({
       user: { id: userId, email },
       tenant: { id: tenantId, name: membership.tenant.name },
-      accessToken: fastify.createAccessToken({ userId, tenantId, role: 'owner' })
+      accountType: 'organization',
+      accessToken: fastify.createAccessToken({ userId, accountType: 'organization', tenantId, role: 'owner' })
     })
   })
 
@@ -102,17 +103,20 @@ const authRoutes: FastifyPluginAsync = async (fastify) => {
       const platformRole = platformMembership.role.toString().toLowerCase() as PlatformRole
       return {
         user: { id: user.id, email: user.email },
+        accountType: 'platform',
         platformRole,
-        accessToken: fastify.createAccessToken({ userId: user.id, platformRole })
+        accessToken: fastify.createAccessToken({ userId: user.id, accountType: 'platform', platformRole })
       }
     }
 
     return {
       user: { id: user.id, email: user.email },
+      accountType: 'organization',
       tenantId: membership.tenantId,
       role: membership.role.toString().toLowerCase() as Role,
       accessToken: fastify.createAccessToken({
         userId: user.id,
+        accountType: 'organization',
         tenantId: membership.tenantId,
         role: membership.role.toString().toLowerCase() as Role
       })
@@ -183,6 +187,7 @@ const authRoutes: FastifyPluginAsync = async (fastify) => {
     if (!user) return
     return {
       user: { id: user.id, email: user.email },
+      accountType: request.auth!.accountType,
       ...(request.auth!.tenantId ? { tenantId: request.auth!.tenantId, role: request.auth!.role } : { platformRole: request.auth!.platformRole })
     }
   })

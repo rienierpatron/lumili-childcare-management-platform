@@ -10,7 +10,12 @@
     "dev": "docker compose up -d postgres redis && DATABASE_URL=postgresql://childcare:childcare@localhost:55432/childcare AUTH_SECRET=local-development-secret-change-me-32-characters NEXT_PUBLIC_API_URL=http://localhost:30001 turbo dev --dangerously-disable-package-manager-check",
     "build": "turbo build",
     "lint": "turbo lint",
-    "typecheck": "turbo typecheck"
+    "typecheck": "turbo typecheck",
+    "db:generate": "pnpm --filter identity db:generate",
+    "migration:schema-changes": "pnpm --filter identity db:migrate",
+    "db:migrate:status": "pnpm --filter identity db:migrate:status",
+    "db:deploy": "pnpm --filter identity db:deploy",
+    "db:seed": "pnpm --filter identity db:seed"
   },
   "devDependencies": {
     "@types/node": "^26.6.2",

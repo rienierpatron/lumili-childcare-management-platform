@@ -1,14 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  --ink: #223330;
-  --muted: #6f7e79;
-  --line: #dfe8e3;
-  --paper: #f7faf7;
-  --sage: #dcefe4;
-  --green: #2e6b53;
-  --green-dark: #24533f;
-  --coral: #f4a58d;
+  --ink: #33272b;
+  --muted: #75686b;
+  --line: #ebd8dc;
+  --paper: #fff9f6;
+  --soft-blush: #f9e4e7;
+  --primary: #a94f68;
+  --primary-dark: #7f304a;
+  --blush: #e99aa7;
 }
 
 * {
@@ -40,9 +40,9 @@ input {
   margin: auto;
   padding: 48px 44px;
   background: rgba(255, 255, 255, 0.9);
-  border: 1px solid rgba(223, 232, 227, 0.9);
+  border: 1px solid rgba(235, 216, 220, 0.9);
   border-radius: 28px;
-  box-shadow: 0 24px 70px rgba(47, 83, 65, 0.08);
+  box-shadow: 0 24px 70px rgba(127, 48, 74, 0.08);
 }
 
 .brand-mark {
@@ -52,7 +52,7 @@ input {
   height: 44px;
   margin-bottom: 28px;
   color: white;
-  background: var(--green);
+  background: var(--primary);
   border-radius: 14px 14px 14px 4px;
   font-size: 22px;
   font-weight: 700;
@@ -61,7 +61,7 @@ input {
 .eyebrow,
 .aside-label {
   margin: 0 0 12px;
-  color: var(--green);
+  color: var(--primary);
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.13em;
@@ -105,7 +105,7 @@ input {
   margin-bottom: 20px;
   padding: 0 16px;
   color: var(--ink);
-  background: #fbfdfb;
+  background: #fffdfc;
   border: 1px solid var(--line);
   border-radius: 12px;
   outline: none;
@@ -113,8 +113,8 @@ input {
 }
 
 input:focus {
-  border-color: var(--green);
-  box-shadow: 0 0 0 4px rgba(46, 107, 83, 0.12);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(169, 79, 104, 0.12);
 }
 
 .label-row {
@@ -125,7 +125,7 @@ input:focus {
 
 .text-button {
   padding: 0;
-  color: var(--green);
+  color: var(--primary);
   background: none;
   border: 0;
   cursor: pointer;
@@ -138,13 +138,13 @@ input:focus {
   grid-template-columns: 1fr 1fr;
   margin-top: 26px;
   padding: 4px;
-  background: var(--sage);
+  background: var(--soft-blush);
   border-radius: 12px;
 }
 
 .scope-toggle button {
   padding: 10px 8px;
-  color: var(--green-dark);
+  color: var(--primary-dark);
   background: transparent;
   border: 0;
   border-radius: 9px;
@@ -155,7 +155,7 @@ input:focus {
 
 .scope-toggle .scope-active {
   background: white;
-  box-shadow: 0 2px 8px rgba(46, 107, 83, 0.1);
+  box-shadow: 0 2px 8px rgba(127, 48, 74, 0.1);
 }
 
 .primary-button,
@@ -170,12 +170,12 @@ input:focus {
 
 .primary-button {
   color: white;
-  background: var(--green);
+  background: var(--primary);
   transition: background 160ms ease, transform 160ms ease;
 }
 
 .primary-button:hover:not(:disabled) {
-  background: var(--green-dark);
+  background: var(--primary-dark);
   transform: translateY(-1px);
 }
 
@@ -185,14 +185,14 @@ input:focus {
 }
 
 .secondary-button {
-  color: var(--green-dark);
-  background: var(--sage);
+  color: var(--primary-dark);
+  background: var(--soft-blush);
 }
 
 .error-message {
   margin: -4px 0 18px;
   padding: 12px;
-  color: #9a4038;
+  color: #b54747;
   background: #fff0ed;
   border-radius: 10px;
   font-size: 13px;
@@ -201,8 +201,8 @@ input:focus {
 .notice {
   margin: 24px 0;
   padding: 14px;
-  color: var(--green-dark);
-  background: var(--sage);
+  color: var(--primary-dark);
+  background: var(--soft-blush);
   border-radius: 10px;
   font-size: 13px;
   line-height: 1.5;
@@ -217,7 +217,7 @@ input:focus {
 }
 
 .footer-copy span {
-  color: var(--green);
+  color: var(--primary);
   font-weight: 700;
 }
 
@@ -229,8 +229,8 @@ input:focus {
   min-height: 620px;
   overflow: hidden;
   padding: clamp(36px, 7vw, 100px);
-  color: var(--green-dark);
-  background: var(--sage);
+  color: var(--primary-dark);
+  background: var(--soft-blush);
   border-radius: 32px;
 }
 
@@ -245,14 +245,14 @@ input:focus {
 .login-aside > p:last-child {
   max-width: 400px;
   margin-bottom: 0;
-  color: #547265;
+  color: #855967;
   font-size: 17px;
   line-height: 1.65;
 }
 
 .aside-orbit {
   position: absolute;
-  border: 1px solid rgba(46, 107, 83, 0.18);
+  border: 1px solid rgba(127, 48, 74, 0.18);
   border-radius: 50%;
 }
 
