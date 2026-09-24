@@ -16,6 +16,45 @@ SEED_ADMIN_PASSWORD='use-at-least-12-characters' pnpm db:seed
 The seed creates a demo tenant and owner account. Set `SEED_ADMIN_EMAIL` to
 override the default `admin@example.com`.
 
+The seeded owner is also a platform owner. Platform users are separate from
+childcare organization memberships and use these roles:
+
+- `owner`: manage platform access
+- `support`: assist organizations and users
+- `sales`: manage sales and onboarding workflows
+- `developer`: access approved engineering tools
+- `ops`: manage operations and platform access
+
+Platform users are invitation-only. A platform owner or ops user creates an
+invitation:
+
+```bash
+curl -X POST http://localhost:30002/auth/platform/invitations \
+  -H 'content-type: application/json' \
+  -H "authorization: Bearer $PLATFORM_OWNER_TOKEN" \
+  -d '{"email":"support@example.com","role":"support"}'
+```
+
+The response contains a one-time invitation token. The invited user accepts it
+with a password:
+
+```bash
+curl -X POST http://localhost:30002/auth/platform/invitations/accept \
+  -H 'content-type: application/json' \
+  -d '{"token":"INVITATION_TOKEN","password":"use-at-least-12-characters"}'
+```
+
+They can then sign in with the platform scope:
+
+```bash
+curl -X POST http://localhost:30002/auth/login \
+  -H 'content-type: application/json' \
+  -d '{"email":"support@example.com","password":"use-at-least-12-characters","scope":"platform"}'
+```
+
+Platform sessions contain `platformRole` instead of a childcare organization
+`tenantId`.
+
 Tests use `AUTH_DATABASE_MODE=memory` so they do not require a running
 PostgreSQL instance. Production and development runs use Prisma by default.
 The seed command uses `tsx` because it is compatible with the Node 24

@@ -18,7 +18,12 @@ const app: FastifyPluginAsync<AppOptions> = async (
   fastify,
   opts
 ): Promise<void> => {
-  // Place here your custom code!
+  fastify.addHook('onRequest', async (_request, reply) => {
+    reply.header('access-control-allow-origin', 'http://localhost:30000')
+    reply.header('access-control-allow-headers', 'content-type, authorization')
+    reply.header('access-control-allow-methods', 'GET,POST,OPTIONS')
+  })
+  fastify.options('/*', async (_request, reply) => reply.code(204).send())
 
   // Do not touch the following lines
 

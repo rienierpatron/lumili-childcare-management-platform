@@ -1,4 +1,4 @@
-import { PrismaClient, Role } from '@prisma/client'
+import { PlatformRole, PrismaClient, Role } from '@prisma/client'
 import { randomBytes, scryptSync } from 'node:crypto'
 
 const prisma = new PrismaClient()
@@ -40,6 +40,11 @@ async function main (): Promise<void> {
       where: { userId_tenantId: { userId: user.id, tenantId: tenant.id } },
       update: { role: Role.OWNER },
       create: { userId: user.id, tenantId: tenant.id, role: Role.OWNER }
+    })
+    await transaction.platformMembership.upsert({
+      where: { userId_role: { userId: user.id, role: PlatformRole.OWNER } },
+      update: {},
+      create: { userId: user.id, role: PlatformRole.OWNER }
     })
     await transaction.seedExecution.create({ data: { seedName, version: seedVersion } })
   })

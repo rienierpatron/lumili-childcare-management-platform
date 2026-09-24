@@ -1,6 +1,6 @@
-# Lumili
+# Annavia
 
-Lumili is a multi-tenant childcare management platform with role-based access
+Annavia is a multi-tenant childcare management platform with role-based access
 control and independently deployable backend services.
 
 This repository is a pnpm/Turborepo monorepo with an explicit frontend/backend

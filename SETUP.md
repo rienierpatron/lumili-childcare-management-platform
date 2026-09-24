@@ -1,6 +1,6 @@
-# Lumili Local Development Setup
+# Annavia Local Development Setup
 
-This guide explains how to run Lumili, the childcare management platform,
+This guide explains how to run Annavia, the childcare management platform,
 locally.
 
 ## Choose the workflow you need
@@ -18,7 +18,7 @@ Use the section that matches your situation:
 
 ## First-time setup
 
-Follow these steps when setting up Lumili on a new machine, or after deleting
+Follow these steps when setting up Annavia on a new machine, or after deleting
 the PostgreSQL Docker volume.
 
 ### 1. Install prerequisites
@@ -61,7 +61,7 @@ docker compose ps
 
 Wait until both containers show `Up`.
 
-Lumili uses these host ports to avoid conflicts with common local
+Annavia uses these host ports to avoid conflicts with common local
 installations:
 
 ```text
@@ -112,7 +112,7 @@ Email:  admin@example.com
 Role:   OWNER
 ```
 
-### 5. Start Lumili
+### 5. Start Annavia
 
 Return to the repository root:
 
@@ -129,7 +129,7 @@ http://localhost:30000
 
 ## Start an existing local setup
 
-Use this workflow when PostgreSQL already contains the Lumili database and the
+Use this workflow when PostgreSQL already contains the Annavia database and the
 initial migration and seed have already been applied.
 
 ### 1. Start infrastructure
@@ -743,7 +743,7 @@ SEED_ADMIN_PASSWORD='use-at-least-12-characters' pnpm db:seed
 ```
 
 Use port `55432` in this command. Port `5432` may point to a separate
-PostgreSQL installation on the host rather than the Lumili Docker container.
+PostgreSQL installation on the host rather than the Annavia Docker container.
 
 Prisma records every applied migration in its internal `_prisma_migrations`
 table. For staging and production, apply committed migrations without creating

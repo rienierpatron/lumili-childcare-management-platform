@@ -14,13 +14,49 @@ enum Role {
   PARENT
 }
 
+enum PlatformRole {
+  OWNER
+  SUPPORT
+  SALES
+  DEVELOPER
+  OPS
+}
+
 model User {
   id           String       @id @default(uuid())
   email        String       @unique
   passwordHash String
   memberships  Membership[]
+  platformMemberships PlatformMembership[]
+  platformInvitationsCreated PlatformInvitation[] @relation("PlatformInvitationCreator")
   createdAt    DateTime     @default(now())
   updatedAt    DateTime     @updatedAt
+}
+
+model PlatformMembership {
+  id        String       @id @default(uuid())
+  userId    String
+  role      PlatformRole
+  user      User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime     @default(now())
+
+  @@unique([userId, role])
+  @@index([role])
+}
+
+model PlatformInvitation {
+  id          String       @id @default(uuid())
+  email       String
+  role        PlatformRole
+  tokenHash   String       @unique
+  expiresAt   DateTime
+  acceptedAt  DateTime?
+  createdById String
+  createdBy   User         @relation("PlatformInvitationCreator", fields: [createdById], references: [id], onDelete: Cascade)
+  createdAt   DateTime      @default(now())
+
+  @@index([email])
+  @@index([expiresAt])
 }
 
 model Tenant {

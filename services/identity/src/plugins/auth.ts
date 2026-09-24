@@ -10,6 +10,7 @@ import type { FastifyReply, FastifyRequest } from 'fastify'
 import type { PrismaClient } from '@prisma/client'
 
 export type Role = 'owner' | 'admin' | 'staff' | 'parent'
+export type PlatformRole = 'owner' | 'support' | 'sales' | 'developer' | 'ops'
 export type Permission =
   | 'tenant:read'
   | 'tenant:manage'
@@ -26,12 +27,14 @@ export type AuthUser = {
   email: string
   passwordHash: string
   memberships: TenantMembership[]
+  platformMemberships?: { role: PlatformRole }[]
 }
 
 export type AuthContext = {
   userId: string
-  tenantId: string
-  role: Role
+  tenantId?: string
+  role?: Role
+  platformRole?: PlatformRole
 }
 
 type TokenPayload = AuthContext & {
@@ -101,7 +104,7 @@ function readToken (token: string, secret: string): TokenPayload | null {
 
   try {
     const parsed = decode<TokenPayload>(payload)
-    if (!parsed.userId || !parsed.tenantId || !parsed.role || parsed.exp <= Math.floor(Date.now() / 1000)) {
+    if (!parsed.userId || (!parsed.tenantId && !parsed.platformRole) || parsed.exp <= Math.floor(Date.now() / 1000)) {
       return null
     }
     return parsed
@@ -143,7 +146,7 @@ const auth = fp<AuthOptions>(async (fastify, options) => {
 
   fastify.decorate('authorize', (permission: Permission) => {
     return async function (request: FastifyRequest, reply: FastifyReply) {
-      if (!request.auth || !rolePermissions[request.auth.role].includes(permission)) {
+      if (!request.auth?.role || !rolePermissions[request.auth.role].includes(permission)) {
         return reply.code(403).send({ error: 'forbidden' })
       }
     }

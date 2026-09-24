@@ -13,7 +13,8 @@ export async function apiFetch<T> (
   })
 
   if (!response.ok) {
-    throw new Error(`API request failed with status ${response.status}`)
+    const body = await response.json().catch(() => null) as { error?: string } | null
+    throw new Error(body?.error ?? `API request failed with status ${response.status}`)
   }
 
   return response.json() as Promise<T>

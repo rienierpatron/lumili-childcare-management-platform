@@ -15,10 +15,10 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Lumili",
-    template: "%s | Lumili",
+    default: "Annavia",
+    template: "%s | Annavia",
   },
-  description: "Lumili childcare management platform",
+  description: "Annavia childcare management platform",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
